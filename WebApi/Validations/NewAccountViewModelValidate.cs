@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using JwtExample.ViewModels;
+using WebApi.ViewModels;
 
 namespace WebApi.Validations;
 

@@ -7,4 +7,5 @@ public interface IAccountService
 {
     Task<Result<bool, Exception>> Register(User user);
     Task<Result<string, Exception>> StartVerifyAccount(string email);
+    Task<Result<bool, Exception>> ConfirmVerifyAccount(string codes);
 }

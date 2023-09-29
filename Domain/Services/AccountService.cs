@@ -12,7 +12,7 @@ public class AccountService : IAccountService
 {
     private readonly JwtContext _db;
     private readonly IPasswordHasher _passwordHasher;
-    
+
 
     public AccountService(JwtContext db, IPasswordHasher passwordHasher)
     {
@@ -22,24 +22,8 @@ public class AccountService : IAccountService
 
     public async Task<Result<bool, Exception>> Register(User user)
     {
-        var newUser = new User
-        {
-            Login = user.Login,
-            Password = _passwordHasher.Hash(user.Password),
-            Surname = user.Surname,
-            Email = user.Email,
-            Id = Guid.NewGuid(),
-            CreateDateTimeOffset = DateTimeOffset.Now,
-            UserConfirmed = false
-        };
-        var userRole = new UserRole
-        {
-            Id = 0,
-            User = newUser,
-            UserId = newUser.Id,
-            Role = null,
-            RoleId = (int)PermissionType.User
-        };
+        var newUser = new User(user.Login, _passwordHasher.Hash(user.Password), user.Surname, user.Email);
+        var userRole = new UserRole(user, user.Id, null, (int)PermissionType.User);
         await _db.UserRoles.AddAsync(userRole);
         await _db.Users.AddAsync(newUser);
         await _db.SaveChangesAsync();
@@ -61,5 +45,19 @@ public class AccountService : IAccountService
         await _db.ConfirmCodes.AddAsync(newCodes);
         await _db.SaveChangesAsync();
         return newCodes.Codes;
+    }
+
+    public async Task<Result<bool, Exception>> ConfirmVerifyAccount(string codes)
+    {
+        var findCodes = await _db.ConfirmCodes.FirstOrDefaultAsync(c => c.Codes == codes);
+        if (findCodes is null)
+            return new Result<bool, Exception>(new Exception("такого кода нету"));
+        var findUser = await _db.Users.SingleOrDefaultAsync(u => u.Id == findCodes.UserId);
+        if (findUser is null)
+            return new Result<bool, Exception>(new Exception("такого пользователя нету"));
+        findUser.UserConfirmed = true;
+        await _db.Users.AddAsync(findUser);
+        await _db.SaveChangesAsync();
+        return true;
     }
 }

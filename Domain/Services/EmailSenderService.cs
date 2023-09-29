@@ -1,6 +1,7 @@
-﻿using MailKit.Net.Smtp;
-using Domain.Services.Abstracts;
+﻿using Domain.Services.Abstracts;
+using MailKit.Net.Smtp;
 using MimeKit;
+using MimeKit.Text;
 
 namespace Domain.Services;
 
@@ -10,10 +11,10 @@ public class EmailSenderService : IEmailSenderService
 
     {
         var emailMessage = new MimeMessage();
-        emailMessage.From.Add(new MailboxAddress("Администрация сайта", "viexsad@mail.ru")); 
+        emailMessage.From.Add(new MailboxAddress("Администрация сайта", "viexsad@mail.ru"));
         emailMessage.To.Add(new MailboxAddress("", email));
         emailMessage.Subject = subject;
-        emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html)
+        emailMessage.Body = new TextPart(TextFormat.Html)
         {
             Text = message
         };

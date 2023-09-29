@@ -2,9 +2,16 @@
 
 public sealed class UserRole
 {
-    public required int Id { get; set; }
-    public required User User { get; set; }
-    public required Guid UserId { get; set; }
-    public required Role Role { get; set; }
-    public required int RoleId { get; set; }
+    public UserRole(User user, Guid userId, Role role, int roleId)
+    {
+        User = user;
+        UserId = userId;
+        Role = role;
+        RoleId = roleId;
+    }
+    public  int Id { get; set; }
+    public  User User { get; set; }
+    public  Guid UserId { get; set; }
+    public  Role Role { get; set; }
+    public  int RoleId { get; set; }
 }

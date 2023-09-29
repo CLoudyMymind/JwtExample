@@ -1,4 +1,4 @@
-namespace JwtExample.ViewModels;
+namespace WebApi.ViewModels;
 
 public sealed class AccountViewModel
 {

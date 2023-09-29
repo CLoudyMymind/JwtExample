@@ -57,12 +57,12 @@ public readonly struct Result<TSuccess, TFailure>
     {
         return new Result<TSuccess, TFailure>(failure);
     }
-    
+
     public void LogResult(ILogger logger)
     {
         if (IsFailure && Failure != null)
             logger.LogWarning("Result created with failure: {@Failure}", Failure);
-        
+
         else if (IsSuccess && Success != null)
             logger.LogWarning("Result created with success: {@Success}", Success);
     }

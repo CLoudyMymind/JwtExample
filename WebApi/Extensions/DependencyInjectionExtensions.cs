@@ -29,7 +29,6 @@ public static class DependencyInjectionExtensions
         services.AddScoped<IAccountService, AccountService>();
         services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<IEmailSenderService, EmailSenderService>();
-
     }
 
     public static void AddFluentValidation(this IServiceCollection service)

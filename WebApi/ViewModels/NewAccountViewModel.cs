@@ -1,6 +1,6 @@
 ﻿using Domain.Models;
 
-namespace JwtExample.ViewModels;
+namespace WebApi.ViewModels;
 
 public class NewAccountViewModel
 {

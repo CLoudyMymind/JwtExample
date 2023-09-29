@@ -1,6 +1,6 @@
 ﻿using Domain.Services.Abstracts;
-using JwtExample.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.ViewModels;
 
 namespace WebApi.Controllers;
 
