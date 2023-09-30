@@ -42,7 +42,7 @@ public class AccountsController : ControllerBase
         return Ok("инструкция для подтверждения была отправлено на почту");
     }
 
-    [HttpPut("confirm/{model:required}")]
+    [HttpPut("confirm/{codes:required}")]
     public async Task<IActionResult> ConfirmVerifyAsync(string codes)
     {
         var result = await _accountService.ConfirmVerifyAccount(codes);

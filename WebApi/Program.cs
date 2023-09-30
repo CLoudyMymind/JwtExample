@@ -5,7 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.ConfigureDb(builder);
 builder.Services.AddControllers().AddJsonOptions(b => { b.JsonSerializerOptions.ConfigureJsonOptions(); });
-;
+builder.Services.AddJwtTokenAuthentication();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDomainServices();

@@ -27,7 +27,7 @@ public class TokenService : ITokenService
     {
         try
         {
-            var user = await _db.Users.FirstOrDefaultAsync(c => c.Login == login);
+            var user = await _db.Users.FirstOrDefaultAsync(c => c.Login.ToLower() == login.ToLower());
             if (user is null)
                 return new Result<string, Exception>(new Exception("Такого пользователя нету"));
             if (!_passwordHasher.Verify(password, user.Password))
@@ -96,7 +96,7 @@ public class TokenService : ITokenService
 
     private string GenerateRefreshToken()
     {
-        var randomNumber = new byte[32];
+        var randomNumber = new byte[128];
         using var rng = RandomNumberGenerator.Create();
         rng.GetBytes(randomNumber);
         return Convert.ToBase64String(randomNumber);
@@ -118,8 +118,9 @@ public class TokenService : ITokenService
             AuthOptions.Issuer,
             AuthOptions.Audience,
             claims,
+            null,
             expires: AuthOptions.LifetimeToken,
-            signingCredentials: signinCredentials
+             signinCredentials
         );
         return new JwtSecurityTokenHandler().WriteToken(tokeOptions);
     }

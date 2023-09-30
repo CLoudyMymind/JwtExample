@@ -23,7 +23,7 @@ public class AccountService : IAccountService
     public async Task<Result<bool, Exception>> Register(User user)
     {
         var newUser = new User(user.Login, _passwordHasher.Hash(user.Password), user.Surname, user.Email);
-        var userRole = new UserRole(user, user.Id, null, (int)PermissionType.User);
+        var userRole = new UserRole(user, user.Id, (int)PermissionType.User, null!);
         await _db.UserRoles.AddAsync(userRole);
         await _db.Users.AddAsync(newUser);
         await _db.SaveChangesAsync();
@@ -56,7 +56,7 @@ public class AccountService : IAccountService
         if (findUser is null)
             return new Result<bool, Exception>(new Exception("такого пользователя нету"));
         findUser.UserConfirmed = true;
-        await _db.Users.AddAsync(findUser);
+         _db.Users.Update(findUser);
         await _db.SaveChangesAsync();
         return true;
     }

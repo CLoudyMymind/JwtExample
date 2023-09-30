@@ -2,12 +2,17 @@
 
 public sealed class UserRole
 {
-    public UserRole(User user, Guid userId, Role role, int roleId)
+    public UserRole(User user, Guid userId, int roleId, Role role)
     {
         User = user;
         UserId = userId;
-        Role = role;
         RoleId = roleId;
+        Role = role;
+    }
+
+    public UserRole()
+    {
+        
     }
     public  int Id { get; set; }
     public  User User { get; set; }

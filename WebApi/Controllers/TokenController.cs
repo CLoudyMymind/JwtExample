@@ -19,6 +19,7 @@ public class TokenController : ControllerBase
     [Route("login")]
     public async Task<IActionResult> Login([FromBody] AccountViewModel model)
     {
-        return Ok();
+        var result = await _tokenService.GetTokenAsync(model.Login, model.Password);
+        return result.IsSuccess ? Ok(result.Success) : BadRequest(new ErrorViewModel(result.Failure));
     }
 }
